@@ -28,13 +28,13 @@ class TabNavigator extends StatelessWidget {
       {int materialIndex: 500}) {
     return {
       TabNavigatorRoutes.root: (context) => ColorsListPage(
-            color: TabHelper.color(tabItem),
+            color: Colors.blue,
             title: TabHelper.description(tabItem),
             onPush: (materialIndex) =>
                 _push(context, materialIndex: materialIndex),
           ),
       TabNavigatorRoutes.detail: (context) => ColorDetailPage(
-            color: TabHelper.color(tabItem),
+            color: Colors.blue,
             title: TabHelper.description(tabItem),
             materialIndex: materialIndex,
           ),

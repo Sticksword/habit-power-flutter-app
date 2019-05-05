@@ -1,62 +1,48 @@
 
 import 'package:flutter/material.dart';
 
-enum TabItem { red, green, blue, grey }
+enum TabItem { home, search, likes, profile }
 
 class TabHelper {
   static TabItem item({int index}) {
     switch (index) {
       case 0:
-        return TabItem.red;
+        return TabItem.home;
       case 1:
-        return TabItem.green;
+        return TabItem.search;
       case 2:
-        return TabItem.blue;
+        return TabItem.likes;
       case 3:
-        return TabItem.grey;
+        return TabItem.profile;
     }
-    return TabItem.red;
+    return TabItem.home;
   }
 
   static String description(TabItem tabItem) {
     switch (tabItem) {
-      case TabItem.red:
-        return 'red';
-      case TabItem.green:
-        return 'green';
-      case TabItem.blue:
-        return 'blue';
-      case TabItem.grey:
-        return 'grey';
+      case TabItem.home:
+        return 'Home';
+      case TabItem.search:
+        return 'Search';
+      case TabItem.likes:
+        return 'Likes';
+      case TabItem.profile:
+        return 'Profile';
     }
-    return '';
+    return 'error';
   }
   static IconData icon(TabItem tabItem) {
     switch (tabItem) {
-      case TabItem.red:
+      case TabItem.home:
         return Icons.home;
-      case TabItem.green:
+      case TabItem.search:
         return Icons.search;
-      case TabItem.blue:
+      case TabItem.likes:
         return Icons.star;
-      case TabItem.grey:
+      case TabItem.profile:
         return Icons.person;
     }
     return Icons.layers;
-  }
-
-  static MaterialColor color(TabItem tabItem) {
-    switch (tabItem) {
-      case TabItem.red:
-        return Colors.red;
-      case TabItem.green:
-        return Colors.green;
-      case TabItem.blue:
-        return Colors.blue;
-      case TabItem.grey:
-        return Colors.grey;
-    }
-    return Colors.orange;
   }
 }
 
@@ -65,16 +51,15 @@ class BottomNavigation extends StatelessWidget {
   final TabItem currentTab;
   final ValueChanged<TabItem> onSelectTab;
 
-
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       items: [
-        _buildItem(tabItem: TabItem.red),
-        _buildItem(tabItem: TabItem.green),
-        _buildItem(tabItem: TabItem.blue),
-        _buildItem(tabItem: TabItem.grey)
+        _buildItem(tabItem: TabItem.home),
+        _buildItem(tabItem: TabItem.search),
+        _buildItem(tabItem: TabItem.likes),
+        _buildItem(tabItem: TabItem.profile)
       ],
       onTap: (index) => onSelectTab(
         TabHelper.item(index: index),
@@ -101,6 +86,6 @@ class BottomNavigation extends StatelessWidget {
   }
 
   Color _colorTabMatching({TabItem item}) {
-    return currentTab == item ? TabHelper.color(item) : Colors.grey;
+    return currentTab == item ? Colors.blue : Colors.grey;
   }
 }

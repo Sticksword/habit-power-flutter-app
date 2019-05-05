@@ -3,20 +3,25 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:json_api/json_api.dart';
 
-import 'models/user.dart';
-import 'models/objective.dart';
+import '../models/user.dart';
+import '../models/objective.dart';
 import 'dart:developer';
 
-class UserWidget extends StatelessWidget {
+class ProfileScreen extends StatelessWidget {
+  Function logout;
+
+  ProfileScreen({@required this.logout});
+
   @override
   Widget build(BuildContext context) {
-    print('building user widget');
+    print('building profile widget');
     return Scaffold(            
       appBar: AppBar(
         title: Text('User Profile'),            
       ),            
-      body: Center(            
-        child: FutureBuilder<User>(
+      body: Column(            
+        children: [
+          FutureBuilder<User>(
             future: getUser(),
             builder: (context, snapshot) {
               // print(snapshot);
@@ -26,13 +31,22 @@ class UserWidget extends StatelessWidget {
               else
                 return CircularProgressIndicator();
             }
-        )
+          ),
+          RaisedButton(
+            child: Text('Log out'),
+            onPressed: () {
+              // Navigate to the second screen using a named route
+              // Navigator.pushReplacementNamed(context, '/');
+              logout();
+            },
+          ),
+        ]
       )
     );
   }
 }
 
-String url = 'http://413dc506.ngrok.io/api/users';
+String url = 'http://ed8a74bd.ngrok.io/api/users';
 Future<User> getUser() async{
   print('fetching');
   Map<String, String> requestHeaders = {
@@ -46,18 +60,20 @@ Future<User> getUser() async{
   // print(test.body);
 
   final client = JsonApiClient();
-  final companiesUri = Uri.parse(uri);
+  final userUri = Uri.parse(uri);
   
-  final response = await client.fetchResource(companiesUri, headers: requestHeaders);
+  final response = await client.fetchResource(userUri, headers: requestHeaders);
 
   print('Status: ${response.status}');
   print('Headers: ${response.headers}');
 
   final resource = response.data.toResource();
   
-  print('The resource is ${response.data.included}');
-  List<Objective> objectives = response.data.included.map((rawObjective) => Objective.fromJson(rawObjective.attributes)).toList();
-  debugger();
+  print('The included resource is ${response.data.included}');
+  if (response.data.included != null) {
+    List<Objective> objectives = response.data.included.map((rawObjective) => Objective.fromJson(rawObjective.attributes)).toList();
+  }
+  // debugger();
 
   // print('Attributes:');
   // resource.attributes.forEach((k, v) => print('$k=$v'));
@@ -68,7 +84,7 @@ Future<User> getUser() async{
   print('Relationships:');
   resource.toOne.forEach((k, v) => print('$k=$v'));
   resource.toMany.forEach((k, v) => print('$k=$v'));
-  print(resource.toMany["objectives"].first);
+  print(resource.toMany["objectives"]);
   // debugger();
   return user;
 }

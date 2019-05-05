@@ -2,7 +2,7 @@ class Objective {
   int userId;
   int id;
   String title;
-  String state;
+  int state;
   int score;
   int length;
   String description;
@@ -27,7 +27,7 @@ class Objective {
     score: json["score"],
     length: json["length"],
     description: json["description"],
-    createdAt: json["created_at"]
+    createdAt: DateTime.parse(json["created_at"])
   );
 
   Map<String, dynamic> toJson() => {

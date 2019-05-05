@@ -8,6 +8,7 @@ class User {
   String school;
   String company;
   DateTime createdAt;
+  String username;
 
   User({
     this.id,
@@ -18,7 +19,8 @@ class User {
     this.about,
     this.school,
     this.company,
-    this.createdAt
+    this.createdAt,
+    this.username
   });
 
   factory User.fromJson(Map<String, dynamic> json) => new User(
@@ -30,12 +32,38 @@ class User {
     about: json["about"],
     school: json["school"],
     company: json["company"],
-    createdAt: DateTime.parse(json["created_at"])
+    createdAt: DateTime.parse(json["created_at"]),
+    username: json["username"]
   );
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "first_name": firstName,
-    "last_name": lastName,
-  };
+  // factory User.dbMap(dynamic obj) => new User(
+  //   id: obj["id"],
+  //   firstName: obj["first_name"],
+  //   lastName: obj["last_name"],
+  //   dob: DateTime.parse(obj["dob"]),
+  //   occupation: obj["occupation"],
+  //   about: obj["about"],
+  //   school: obj["school"],
+  //   company: obj["company"],
+  //   createdAt: DateTime.parse(obj["created_at"]),
+  //   username: obj["username"],
+  //   authToken: obj["auth_token"]
+  // );
+
+  // Map<String, dynamic> toMap() {
+  //   var map = new Map<String, dynamic>();
+  //   map["id"] = id;
+  //   map["username"] = username;
+  //   map["auth_token"] = authToken;
+  //   map["first_name"] = firstName;
+  //   map["last_name"] = lastName;
+  //   map["dob"] = dob;
+  //   map["occupation"] = occupation;
+  //   map["about"] = about;
+  //   map["school"] = school;
+  //   map["company"] = company;
+  //   map["created_at"] = createdAt;
+
+  //   return map;
+  // }
 }
